@@ -115,42 +115,44 @@ def update_model():
 
 @app.route("/test", methods=["GET", "POST"])
 def prediction_interface():
-    response = ''
-    if request.method == "POST":
-        post_data = request.form['content']
-        print('Posted content:', str(type(post_data)), post_data)
-        
-        float_input_arr = post_data.split(',')
-        if type(float_input_arr) != type(list()):
-            float_input_arr = float_input_arr.split(' ')
+    try:
+        response = ''
+        if request.method == "POST":
+            post_data = request.form['content']
+            
+            float_input_arr = post_data.split(',')
+            if not len(float_input_arr) > 1:
+                float_input_arr = float_input_arr[0].split(' ')
 
-        if type(float_input_arr) == type(list()):
+        
             float_input_arr = filter(lambda x: x != "", float_input_arr)
             float_input_arr = list([float(i) for i in float_input_arr])
 
             response = float_input_arr
             #item = np.expand_dims(float_input_arr[0], axis=0)
             item = array_to_prediction_obj(float_input_arr)
-            print(item.shape)
-            """prediction = model.predict(item) 
+            prediction = model.predict(item) 
             response = {
                 'class1': json.dumps(prediction[0, 0].item()),
                 'class2': json.dumps(prediction[0, 1].item())
-            }"""
-        else:
-            response = 'Error wrong format!'
+            }
+    except Exception as e:
+        response = str(e)
+    
+    finally:
+        return f"""
+            <h3>Testing interface</h3>
+            <p>Array should be comma OR space seperated.</p>
+            <hr>
+            <form action="/test" method="post">
+            <input style="width: 100px;" type="text" id="content" name="content">
+            <br>
+            <div><input type="submit" name="submit" value="submit"></div>
+            </form>
+            <code>{response}</code>
+            """
 
-    return f"""
-        <h3>Testing interface</h3>
-        <p>Array should be comma OR space seperated.</p>
-        <hr>
-        <form action="/test" method="post">
-        <input style="width: 100px;" type="text" id="content" name="content">
-        <br>
-        <div><input type="submit" name="submit" value="submit"></div>
-        </form>
-        <code>{response}</code>
-        """
+
 
 
 # only used for testing, could be removed. No dependents
