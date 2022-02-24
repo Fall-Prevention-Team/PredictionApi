@@ -123,6 +123,8 @@ def prediction_interface():
             float_input_arr = post_data.split(',')
             if not len(float_input_arr) > 1:
                 float_input_arr = float_input_arr[0].split(' ')
+            if not len(float_input_arr) > 1:
+                float_input_arr = float_input_arr[0].split('\t')
 
         
             float_input_arr = filter(lambda x: x != "", float_input_arr)
@@ -142,7 +144,7 @@ def prediction_interface():
     finally:
         return f"""
             <h3>Testing interface</h3>
-            <p>Array should be comma OR space seperated.</p>
+            <p>Array should be comma OR space seperated OR tabs.</p>
             <hr>
             <form action="/test" method="post">
             <input style="width: 100px;" type="text" id="content" name="content">
