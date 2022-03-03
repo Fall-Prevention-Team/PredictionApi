@@ -3,5 +3,6 @@ services:
     kerasapi:
         ports:
             - '5000:5000'
-        #network_mode: host
+        # if ip is not static, comment out network_mode
+        network_mode: host
         image: kerasapi
