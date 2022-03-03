@@ -9,8 +9,8 @@ app = Flask(__name__)
 
 try_use_device = 'cpu'
 if len(sys.argv) > 1:
-    if sys.argv[1] == 'cpu' or sys.argv[1] == 'gpu':
-        try_use_device = sys.argv[1]
+    if sys.argv[1] == 'gpu':
+        try_use_device = 'gpu'
 
 model_manager.tf_init(try_use_device)
 

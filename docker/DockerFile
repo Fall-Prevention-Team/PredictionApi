@@ -12,6 +12,7 @@ CMD ["flask", "run"]
 
 # docker build -t kerasapi:latest -f ./docker/DockerFile .
 # docker run --gpus all kerasapi
+# docker run --network=host --gpus all kerasapi
 
 # this did something
 # docker run -it --rm --gpus all ubuntu nvidia-smi
