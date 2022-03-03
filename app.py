@@ -1,8 +1,4 @@
 from flask import Flask, request, jsonify, redirect
-import keras
-import tensorflow as tf
-import pandas as pd
-import numpy as np
 import sys
 import json
 import model_manager
@@ -11,20 +7,14 @@ import model_manager
 # Initialize flask application
 app = Flask(__name__)
 
-physical_devices = tf.config.experimental.list_physical_devices('GPU')
-assert len(physical_devices) > 0, "Not enough GPU hardware devices available"
-config = tf.config.experimental.set_memory_growth(physical_devices[0], True)
-print('GPU config return:', config)
+try_use_device = 'cpu'
+if len(sys.argv) > 1:
+    if sys.argv[1] == 'cpu' or sys.argv[1] == 'gpu':
+        try_use_device = sys.argv[1]
 
-model = keras.models.load_model(model_manager.MODEL_PATH)
+model_manager.tf_init(try_use_device)
 
 
-def array_to_prediction_obj(float_arr):
-    npaar = np.array([float_arr])
-    if len(npaar.shape) == 2:  # if univariate
-        # add a dimension to make it multivariate with one dimension
-        npaar = npaar.reshape((npaar.shape[0], npaar.shape[1], 1))
-    return npaar
 
 
 @app.route('/predict', methods=['POST', 'GET'])
@@ -50,8 +40,7 @@ def predict():
         # extract vars from post json
         input_arr = post_data['content']
 
-        item = array_to_prediction_obj(input_arr)
-        prediction = model.predict(item)
+        prediction = model_manager.predict_from_array(input_arr)
          
         # create json response object
         response_json = {
@@ -131,9 +120,7 @@ def prediction_interface():
             float_input_arr = list([float(i) for i in float_input_arr])
 
             response = float_input_arr
-            #item = np.expand_dims(float_input_arr[0], axis=0)
-            item = array_to_prediction_obj(float_input_arr)
-            prediction = model.predict(item) 
+            prediction = model_manager.predict_from_array(float_input_arr)
             response = {
                 'class1': json.dumps(prediction[0, 0].item()),
                 'class2': json.dumps(prediction[0, 1].item())
@@ -157,7 +144,7 @@ def prediction_interface():
 
 
 
-# only used for testing, could be removed. No dependents
+"""# only used for testing, could be removed. No dependents
 def predict_testing():
     #inpu = [41, -345, -112, -383, -1223, 49]
     inpu = [-193, 38, -183, -50, 44, 8]
@@ -171,7 +158,7 @@ def predict_testing():
         'class1': json.dumps(prediction[0, 0].item()),
         'class2': json.dumps(prediction[0, 1].item())
         }
-    print(response_json)
+    print(response_json)"""
 
 
 if __name__ == "__main__":

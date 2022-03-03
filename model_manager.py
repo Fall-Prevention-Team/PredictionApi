@@ -9,10 +9,23 @@ live prediction log
 """
 import requests
 import time
+import numpy as np
+import pandas as pd
+import sys
+
 
 MODEL_URL = 'https://github.com/Fall-Prevention-Team/Current_model_stats/raw/main/stats/best_model.hdf5'
 MODEL_PATH = './model/model.hdf5'
 LOG_PATH_TIME_LAST_RENEW = './logs/last_renew.txt'
+
+def _array_to_prediction_obj(float_arr):
+    npaar = np.array([float_arr])
+    if len(npaar.shape) == 2:  # if univariate
+        # add a dimension to make it multivariate with one dimension
+        npaar = npaar.reshape((npaar.shape[0], npaar.shape[1], 1))
+    return npaar
+
+
 
 def retrieve_new_model(model_download_link=MODEL_URL):
     try:
@@ -45,4 +58,37 @@ def get_last_model_renew_time():
     except Exception as e:
         return f'Something went wrong!', e
 
-        
+
+model = None
+def tf_init(use='gpu'):
+    global model
+    if use == 'gpu':
+        import tensorflow as tf
+        import keras
+        physical_devices = tf.config.experimental.list_physical_devices('GPU')
+        assert len(physical_devices) > 0, "Not enough GPU hardware devices available"
+        config = tf.config.experimental.set_memory_growth(physical_devices[0], True)
+        print('GPU config return:', config)
+        print('Physical Devices:', physical_devices)   
+        model = keras.models.load_model(MODEL_PATH)
+    elif use == 'cpu':
+        import os
+        os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+        import tensorflow as tf
+        import keras
+        model = keras.models.load_model(MODEL_PATH)
+    else:
+        print('### tf_init user var:', use)
+        assert use == 'gpu' or use == 'cpu', 'plz specify gpu or cpu'
+
+
+
+def predict_from_array(input_arr):
+    if 'keras' not in sys.modules:
+        import keras
+
+    global model
+    assert model != None, 'No model initialization'
+
+    item = _array_to_prediction_obj(input_arr)
+    return model.predict(item)

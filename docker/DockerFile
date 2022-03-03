@@ -3,7 +3,6 @@ FROM python:3.8-slim
 WORKDIR /code
 ENV FLASK_APP=app.py
 ENV FLASK_RUN_HOST=0.0.0.0
-# RUN apk add --no-cache gcc musl-dev linux-headers
 
 COPY short_requirements.txt short_requirements.txt
 RUN pip install -r short_requirements.txt
@@ -11,4 +10,10 @@ EXPOSE 5000
 COPY . .
 CMD ["flask", "run"]
 
-# docker build -t benno4president/kerasapi:lastest -f ./docker/DockerFile .
+# docker build -t kerasapi:latest -f ./docker/DockerFile .
+# docker run --gpus all kerasapi
+
+# this did something
+# docker run -it --rm --gpus all ubuntu nvidia-smi
+
+# https://docs.nvidia.com/deeplearning/frameworks/user-guide/index.html
