@@ -10,11 +10,17 @@ EXPOSE 5000
 COPY . .
 CMD ["flask", "run"]
 
+## To build: call this from root project folder.
 # docker build -t kerasapi:latest -f ./docker/DockerFile .
-# docker run --gpus all kerasapi
+
+## To run the container using gpus and host ip.
 # docker run --network=host --gpus all kerasapi
 
-# this did something
+## Expose GPUs for use:
+# Include the --gpus flag when you start a container
+# to access GPU resources. Specify how many GPUs to use.
+# For example:
 # docker run -it --rm --gpus all ubuntu nvidia-smi
 
 # https://docs.nvidia.com/deeplearning/frameworks/user-guide/index.html
+# https://docs.docker.com/config/containers/resource_constraints/
