@@ -13,7 +13,11 @@ if len(sys.argv) > 1:
         try_use_device = 'gpu'
 
 model_manager.tf_init(try_use_device)
-
+print(f"""
+    ######################################
+    ## Tensorflow is utilizing the {try_use_device}! ##
+    ######################################
+""")
 
 
 

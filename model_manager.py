@@ -1,6 +1,10 @@
 """
-renew model - button
-keep track of last model update - display next to button
+Contains:
+Renew model funtionality - button
+Keep track of last model update - display next to button
+
+Initialize tensorflow cpu or gpu - keep model loaded
+Get predictions from model - array
 
 ??
 multiple models
@@ -8,16 +12,17 @@ live prediction log
 
 """
 import requests
-import time
 import numpy as np
 import pandas as pd
-import sys
+import sys, os, time
+
 
 
 MODEL_URL = 'https://github.com/Fall-Prevention-Team/Current_model_stats/raw/main/stats/best_model.hdf5'
 MODEL_PATH = './model/model.hdf5'
 LOG_PATH_TIME_LAST_RENEW = './logs/last_renew.txt'
 
+# util
 def _array_to_prediction_obj(float_arr):
     npaar = np.array([float_arr])
     if len(npaar.shape) == 2:  # if univariate
@@ -58,13 +63,14 @@ def get_last_model_renew_time():
     except Exception as e:
         return f'Something went wrong!', e
 
-
+# stores model in global to keep it loaded.
 model = None
-def tf_init(use='gpu'):
+def tf_init(use='cpu'):
     global model
     if use == 'gpu':
         import tensorflow as tf
         import keras
+        os.environ['CUDA_VISIBLE_DEVICES'] = "1"
         physical_devices = tf.config.experimental.list_physical_devices('GPU')
         assert len(physical_devices) > 0, "Not enough GPU hardware devices available"
         config = tf.config.experimental.set_memory_growth(physical_devices[0], True)
@@ -72,7 +78,6 @@ def tf_init(use='gpu'):
         print('Physical Devices:', physical_devices)   
         model = keras.models.load_model(MODEL_PATH)
     elif use == 'cpu':
-        import os
         os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
         import tensorflow as tf
         import keras
@@ -80,7 +85,6 @@ def tf_init(use='gpu'):
     else:
         print('### tf_init user var:', use)
         assert use == 'gpu' or use == 'cpu', 'plz specify gpu or cpu'
-
 
 
 def predict_from_array(input_arr):
