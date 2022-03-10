@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, redirect
-import sys
-import json
+import sys, json
+import data_collector
 import model_manager
 
 
@@ -146,6 +146,53 @@ def prediction_interface():
             """
 
 
+@app.route("/collection", methods=["GET", "POST"])
+def data_collection_interface():
+    try:
+        response = ''
+        if request.method == "POST":
+            post_data = request.form['content']
+            
+            float_input_arr = post_data.split(',')
+            if not len(float_input_arr) > 1:
+                float_input_arr = float_input_arr[0].split(' ')
+            if not len(float_input_arr) > 1:
+                float_input_arr = float_input_arr[0].split('\t')
+
+            float_input_arr = filter(lambda x: x != "", float_input_arr)
+            float_input_arr = list([float(i) for i in float_input_arr])
+
+            user_id = request.form['pid'] or 123
+            datapoint_class = request.form['class'] or 1
+            response = f'Data collected from user; {user_id} might have failed.'
+
+            in_dict = {
+                'id': user_id,
+                'content': float_input_arr,
+                'class': datapoint_class
+            }
+
+            data_collector.death_and_taxes(in_dict)
+
+            response = f"Data collected from user; {user_id} with the class; {datapoint_class} and value; {float_input_arr}"
+    except Exception as e:
+        response = str(e)
+    
+    finally:
+        return f"""
+            <h3>Data Collection Interface - DCI</h3>
+            <p>Data can be posted to this endpoint with below format</p>
+            <p>Array should be comma OR space OR tab seperated.</p>
+            <hr>
+            <form action="/collection" method="post">
+            <a>pid </a><input style="width: 100px;" type="text" id="pid" name="pid">
+            <a>content </a><input style="width: 100px;" type="text" id="content" name="content">
+            <a>class </a><input style="width: 100px;" type="text" id="class" name="class">
+            <br>
+            <div><input type="submit" name="submit" value="submit"></div>
+            </form>
+            <code>{response}</code>
+            """
 
 
 """# only used for testing, could be removed. No dependents
@@ -168,4 +215,5 @@ def predict_testing():
 if __name__ == "__main__":
     # run flask application in debug mode
     #predict_testing()
+    data_collector = data_collector.TheCollector()
     app.run(debug=True, host="0.0.0.0", port=5000)
