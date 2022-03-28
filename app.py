@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, redirect
-import sys, json
-import data_collector
+import sys, json, traceback
+import data_collection
 import model_manager
 
 
@@ -151,21 +151,24 @@ def data_collection_interface():
     try:
         response = ''
         if request.method == "POST":
-            post_data = request.form['content']
+            post_data = request.get_json() or request.form
             
-            float_input_arr = post_data.split(',')
-            if not len(float_input_arr) > 1:
-                float_input_arr = float_input_arr[0].split(' ')
-            if not len(float_input_arr) > 1:
-                float_input_arr = float_input_arr[0].split('\t')
+            if isinstance(post_data['content'], str):
+                float_input_arr = post_data['content'].split(',')
+                if not len(float_input_arr) > 1:
+                    float_input_arr = float_input_arr[0].split(' ')
+                if not len(float_input_arr) > 1:
+                    float_input_arr = float_input_arr[0].split('\t')
+                float_input_arr = filter(lambda x: x != "", float_input_arr)
+                float_input_arr = list([float(i) for i in float_input_arr])
+            else:
+                float_input_arr = post_data['content']
 
-            float_input_arr = filter(lambda x: x != "", float_input_arr)
-            float_input_arr = list([float(i) for i in float_input_arr])
-
-            user_id = request.form['pid'] or 123
-            datapoint_class = request.form['class'] or 1
-            response = f'Data collected from user; {user_id} might have failed.'
-
+            user_id = post_data['id'] if 'id' in post_data else None
+            user_id = user_id or 123
+            datapoint_class = post_data['class'] if 'class' in post_data else None
+            datapoint_class = datapoint_class or 1
+            
             in_dict = {
                 'id': user_id,
                 'content': float_input_arr,
@@ -176,9 +179,12 @@ def data_collection_interface():
 
             response = f"Data collected from user; {user_id} with the class; {datapoint_class} and value; {float_input_arr}"
     except Exception as e:
-        response = str(e)
+        print(traceback.format_exc(), e)
+        response = 'err:  '+str(e)
     
     finally:
+        res_log = data_collector.simple_log(response)
+        res_log = '<pre>'+'\n'.join(res_log)+'</pre>'
         return f"""
             <h3>Data Collection Interface - DCI</h3>
             <p>Data can be posted to this endpoint with below format</p>
@@ -191,7 +197,7 @@ def data_collection_interface():
             <br>
             <div><input type="submit" name="submit" value="submit"></div>
             </form>
-            <code>{response}</code>
+            <code>{res_log}</code>
             """
 
 
@@ -215,5 +221,5 @@ def predict_testing():
 if __name__ == "__main__":
     # run flask application in debug mode
     #predict_testing()
-    data_collector = data_collector.TheCollector()
+    data_collector = data_collection.TheCollector()
     app.run(debug=True, host="0.0.0.0", port=5000)

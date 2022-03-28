@@ -1,5 +1,5 @@
 import pandas as pd
-import time, json
+import time, json, os
 
 
 
@@ -7,6 +7,7 @@ class TheCollector:
     def __init__(self):
         self.logs_root_path = './logs/tsvs/'
         self.people_root_path = './logs/people/'
+        self.log_path = './logs/log.txt'
         self.personal_logs = self.get_personal_logs()
 
 
@@ -74,6 +75,19 @@ class TheCollector:
             p_log['notifier'] = str(new_notifier)
         self.personal_logs[str(logid)] = p_log
         self.put_personal_logs()
+    
+    def simple_log(self, logtxt):
+        log = []
+        if os.path.exists(self.log_path):
+            with open(self.log_path, 'r') as fp:
+                log = [line.rstrip() for line in fp]
+                log = log or []
+        log.insert(0,logtxt)
+        log = log[:100]
+        with open(self.log_path, 'w') as fp:
+            for li in log:
+                fp.write(li + '\n')
+        return log
 
 
 if __name__ == '__main__':
