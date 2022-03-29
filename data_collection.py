@@ -82,11 +82,12 @@ class TheCollector:
             with open(self.log_path, 'r') as fp:
                 log = [line.rstrip() for line in fp]
                 log = log or []
-        log.insert(0,logtxt)
-        log = log[:100]
-        with open(self.log_path, 'w') as fp:
-            for li in log:
-                fp.write(li + '\n')
+        if logtxt:
+            log.insert(0,logtxt)
+            log = log[:100]
+            with open(self.log_path, 'w') as fp:
+                for li in log:
+                    fp.write(li + '\n')
         return log
 
 

@@ -1,0 +1,24 @@
+
+Data collected from user; 123 with the class; 1 and value; [0, 38, 183, 950, 494, 0]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Data collected from user; 123 with the class; 1 and value; [0, 38, 183, 950, 494, 0]
+
+err:  400 Bad Request: Failed to decode JSON object: None
+
+
+
