@@ -151,8 +151,9 @@ def data_collection_interface():
     try:
         response = ''
         if request.method == "POST":
-            post_data = request.get_json() or request.form
-            
+            print(request)
+            post_data = request.get_json() or request.form   
+ 
             if isinstance(post_data['content'], str):
                 float_input_arr = post_data['content'].split(',')
                 if not len(float_input_arr) > 1:
