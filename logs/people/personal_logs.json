@@ -1,4 +1,14 @@
 {
+    "40ae5544-788c-4c16-a672-6b407ab80bb5": {
+        "name": "@krille333",
+        "notifier": "none",
+        "pid": "40ae5544-788c-4c16-a672-6b407ab80bb5"
+    },
+    "f0bc970202270f40": {
+        "name": "dumdum",
+        "notifier": "none",
+        "pid": "f0bc970202270f40"
+    },
     "sleep": {
         "name": "sleep data",
         "notifier": "none",

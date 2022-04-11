@@ -53,21 +53,22 @@ async def on_message(message):
     
     if content.startswith("!name"):
         full_string = content.split(' ')
-        if not len(full_string) ==3:
-            await message.channel.send("it is not in the right format ma dude form wanted: '!name [some_id] [some_name]' (without the anglebracket ofcourse stupid boi)")
-            return
-        await message.channel.send("YES")       
-        watch_id =full_string[1]
-        name = full_string[2]
+        
         with open(personal_logs) as JsonFile:
             jsonObject = json.load(JsonFile)
             JsonFile.close()
+        
+        if not len(full_string) == 3:
+            await message.channel.send("Format is: !name [some_id] [some_name]", f'```json\n{personal_logs.read_text()}```')
+            return
+        await message.channel.send("YES")       
+        com, watch_id, name = full_string
         if  str(watch_id) in jsonObject:
             jsonObject[str(watch_id)]['name'] = name
             with open(personal_logs, "w") as JsonFile:
                 json.dump(jsonObject, JsonFile, indent=2)
         
-            await message.channel.send(f'```{personal_logs.read_text()}```')
+            await message.channel.send(f'```json\n{personal_logs.read_text()}```')
         else: 
             await message.channel.send("no such is on a watch: " + str(watch_id))
         
