@@ -1,13 +1,8 @@
 import json
 import os
-from ssl import CHANNEL_BINDING_TYPES
-from turtle import width
 import discord
-from numpy import full
 import pandas as pd
 from dotenv import load_dotenv
-from data_collector import TheCollector
-from dhooks import Webhook
 from pathlib import Path
 
 
