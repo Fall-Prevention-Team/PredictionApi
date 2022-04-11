@@ -1,11 +1,14 @@
-import imp
-import time
+import json
 import os
+from ssl import CHANNEL_BINDING_TYPES
+from turtle import width
 import discord
+from numpy import full
 import pandas as pd
 from dotenv import load_dotenv
 from data_collector import TheCollector
 from dhooks import Webhook
+from pathlib import Path
 
 
 load_dotenv()
@@ -21,9 +24,6 @@ async def on_ready():
         if server.name == Server:
             print(server.name)
             continue
-    
-    hook = Webhook("https://discord.com/api/webhooks/960524647487660152/9EfNeUaAukY_HQjSGFPV1VkSs6pwUHcBDrsfsu6ymE1K7-qdtBaVKMswUzYOo78rDZno")
-    hook.send("!123.tsv")
 
 
 
@@ -32,29 +32,52 @@ async def on_message(message):
     if message.author == bot_connection.user:
         return
     
-    root = os.path.join(os.path.dirname(__file__), os.path.join('logs', "tsvs"))
-    logs = os.listdir(root)
+    root = os.path.join(os.path.dirname(__file__), "logs")
+    tsvs = os.listdir(os.path.join(root,"tsvs"))
+    people = os.path.join(root, os.path.join(root, "people"))
+    personal_logs = Path(people + "\\" + os.listdir(people)[0])
     content = message.content
 
 
     if str(content) == "test":
         print("det er bueno der skriver...")
         await message.channel.send("```test```")
+        await message.channel.send(personal_logs)
+
     
     if content.startswith('!'):
         print("HERE")           
-        for l in logs:
+        for l in tsvs:
             name_of_file = l.split('.')[0]
             if name_of_file in content:
                 print("H")
                 await message.channel.send("FILE FOUND MATCHING YOUR STRING:  " +str(l))
 
-    if content in logs:
-        df = pd.read_csv(root + "\\"+ content, sep="\t", header=None)
-        print(df.to_string())
-        await message.channel.send(df.to_string())
+    if str(content) == "Pong!":
+        await message.channel.send("STOP... it is I who is bot")
     
-    if content == "forrest...":
+    if content.startswith("!name"):
+        full_string = content.split(' ')
+        if not len(full_string) ==3:
+            await message.channel.send("it is not in the right format ma dude form wanted: '!name [some_id] [some_name]' (without the anglebracket ofcourse stupid boi)")
+            return
+        await message.channel.send("YES")       
+        watch_id =full_string[1]
+        name = full_string[2]
+        with open(personal_logs) as JsonFile:
+            jsonObject = json.load(JsonFile)
+            JsonFile.close()
+        if  str(watch_id) in jsonObject:
+            jsonObject[str(watch_id)]['name'] = name
+            with open(personal_logs, "w") as JsonFile:
+                json.dump(jsonObject, JsonFile, indent=2)
+        
+            await message.channel.send(f'```{personal_logs.read_text()}```')
+        else: 
+            await message.channel.send("no such is on a watch: " + str(watch_id))
+        
+
+    if content == "forest...":
         await message.channel.send(Run_Forrest_Run())
         
 
@@ -62,13 +85,13 @@ async def on_message(message):
 
 
     if "HELP" in content.upper():
-        await message.channel.send("``` INFO: \n !some_string = find a matching file on user id \n some_file_name = give data from file ```")
+        await message.channel.send("``` INFO: \n !some_string = find a matching file on user id \n some_tsvfile_name = give data from file \n  update personal_logs.json names = !name wacth_id name```")
 
 
 #@bot_connection.event
 from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, consensus_score
 from sklearn.feature_selection import SelectFromModel
 import pickle, sys  
 def Run_Forrest_Run():
