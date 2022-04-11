@@ -1,9 +1,11 @@
+import imp
 import time
 import os
 import discord
 import pandas as pd
 from dotenv import load_dotenv
-
+from data_collector import TheCollector
+from dhooks import Webhook
 
 
 load_dotenv()
@@ -19,6 +21,9 @@ async def on_ready():
         if server.name == Server:
             print(server.name)
             continue
+    
+    hook = Webhook("https://discord.com/api/webhooks/960524647487660152/9EfNeUaAukY_HQjSGFPV1VkSs6pwUHcBDrsfsu6ymE1K7-qdtBaVKMswUzYOo78rDZno")
+    hook.send("!123.tsv")
 
 
 
@@ -52,20 +57,12 @@ async def on_message(message):
     if content == "forrest...":
         await message.channel.send(Run_Forrest_Run())
         
-        
+
 
 
 
     if "HELP" in content.upper():
         await message.channel.send("``` INFO: \n !some_string = find a matching file on user id \n some_file_name = give data from file ```")
-
-        
-
-            
-
-    
-
-    #if str(message.content) + ".tsv" in logs:
 
 
 #@bot_connection.event
