@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# secret keys lol
+logs/sercret_api_api_sshhh.txt

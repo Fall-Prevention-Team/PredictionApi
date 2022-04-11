@@ -1,27 +1,7 @@
 {
-    "123": {
-        "name": "No name connected",
+    "sleep": {
+        "name": "sleep data",
         "notifier": "none",
-        "pid": "123"
-    },
-    "321": {
-        "name": "No name connected",
-        "notifier": "none",
-        "pid": "321"
-    },
-    "f0bc970202270f40": {
-        "name": "No name connected",
-        "notifier": "none",
-        "pid": "f0bc970202270f40"
-    },
-    "regrthrtd": {
-        "name": "No name connected",
-        "notifier": "none",
-        "pid": "regrthrtd"
-    },
-    "test": {
-        "name": "No name connected",
-        "notifier": "none",
-        "pid": "test"
+        "pid": "sleep"
     }
 }

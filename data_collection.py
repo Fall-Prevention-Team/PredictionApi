@@ -1,6 +1,29 @@
 import pandas as pd
 import time, json, os
+from dhooks import Webhook
 
+
+class Brrr_alert:
+    def __init__(self, people_path) -> None:
+        self.ppath = people_path
+        
+        if os.path.exists('logs/sercret_api_api_sshhh.txt'):
+            with open('logs/sercret_api_api_sshhh.txt', 'r') as fptypfds:
+                skey = fptypfds.read()
+        self.captain_hook = Webhook(skey)
+
+    def gobrrr(self, custom_msg:str='', pid:str='', power:int=18):
+        if not custom_msg:
+            person_info = {'name': 'Someone'}
+            if pid:
+                if os.path.exists(self.ppath):
+                    with open(self.ppath + "personal_logs.json", 'r') as fptl:
+                        people = json.load(fptl)
+                person_info = people[pid]
+            self.captain_hook.send(str(person_info['name'])+' went br'+'r'*power)
+            return
+        self.captain_hook.send(custom_msg)
+        return
 
 
 class TheCollector:
@@ -9,6 +32,7 @@ class TheCollector:
         self.people_root_path = './logs/people/'
         self.log_path = './logs/log.txt'
         self.personal_logs = self.get_personal_logs()
+        self.alerter = Brrr_alert(self.people_root_path)
 
 
     def death_and_taxes(self, data_dict):

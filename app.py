@@ -1,8 +1,8 @@
+from base64 import decode
 from flask import Flask, request, jsonify, redirect
 import sys, json, traceback
 import data_collection
 import model_manager
-
 
 # Initialize flask application
 app = Flask(__name__)
@@ -20,7 +20,6 @@ print(f"""
 """)
 
 
-
 @app.route('/predict', methods=['POST', 'GET'])
 def predict():
     
@@ -30,9 +29,9 @@ def predict():
             <h1>Model Endpoint For InceptionTime - (MEFIT)</h1>
             <p>Use this api by making post requests to this endpoint.</p>
             <hr>
-            <code>curl -X POST -H 'Content-Type:application/json' http://model.havart.tech/predict -d '{"content":[-193, 38, -183, -50, 44, 8]}'</code>
+            <code>curl -X POST -H 'Content-Type:application/json' http://172.28.198.13:5000/predict -d '{"id":"tester", "content":[-193, 38, -183, -50, 44, 8]}'</code>
             <p>or (if local instance):</p>
-            <code>curl -X POST -H 'Content-Type:application/json' http://localhost:5000/predict -d '{"content":[0, 38, 183, 950, 494, 0]}'</code>
+            <code>curl -X POST -H 'Content-Type:application/json' http://localhost:5000/predict -d '{"id":"tester", "content":[0, 38, 183, 950, 494, 0]}'</code>
             <hr>
             <p>ps. if you dont know how to make post requests, click <a href="https://www.w3schools.com/python/ref_requests_post.asp">here</a>.</p>
             """
@@ -51,7 +50,11 @@ def predict():
             'class1': json.dumps(prediction[0, 0].item()),
             'class2': json.dumps(prediction[0, 1].item())
             }
-        print(response_json)
+
+        if not max(response_json) == 'class1':
+            brpower = int(sum([float(x) for x in response_json.values()]) * 100)
+            data_collector.alerter.gobrrr(pid=post_data['id'], power=brpower)
+        print(brpower, response_json, max(response_json))
 
         # convert to response json object
         response = jsonify(response_json)
@@ -80,6 +83,11 @@ def health():
     if request.method == "GET":
         return "Working Fine"
 
+@app.route("/ping", methods=["GET"])
+def pingpong():
+    if request.method == "GET":
+        data_collector.alerter.gobrrr(custom_msg='Pong!')
+        return "Ping!"
 
 global_str = ''
 @app.route("/update", methods=["GET", "POST"])
