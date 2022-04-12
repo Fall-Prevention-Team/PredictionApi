@@ -151,12 +151,6 @@ def prediction_interface():
             <div><input type="submit" name="submit" value="submit"></div>
             </form>
             <code>{response}</code>
-            <script>
-                function autoRefresh() {{
-                    window.location = window.location.href;
-                }}
-                setInterval('autoRefresh()', 2000);
-            </script>
             """
 
 
@@ -213,6 +207,12 @@ def data_collection_interface():
             <div><input type="submit" name="submit" value="submit"></div>
             </form>
             <code>{res_log}</code>
+            <script>
+                function autoRefresh() {{
+                    window.location = window.location.href;
+                }}
+                setInterval('autoRefresh()', 2000);
+            </script>
             """
 
 
