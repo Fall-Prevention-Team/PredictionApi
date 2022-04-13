@@ -81,7 +81,7 @@ async def on_message(message):
 
 
     if "HELP" in content.upper():
-        await message.channel.send("``` INFO: \n !some_string = find a matching file on user id \n some_tsvfile_name = give data from file \n  update personal_logs.json names = !name wacth_id name```")
+        await message.channel.send("``` INFO: \n !some_string = find a matching file on user id \n some_tsvfile_name = give data from file \n update personal_logs.json names = !name wacth_id name \n if you want current stats of RFC type: 'give me stats'```")
 
 
 bot_connection.run(Token)
