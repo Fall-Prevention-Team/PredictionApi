@@ -1,6 +1,3 @@
-from cgi import test
-from tkinter.messagebox import NO
-from numpy import inner
 import pandas as pd
 import os
 
