@@ -68,5 +68,10 @@
         "name": "sleep data",
         "notifier": "none",
         "pid": "sleep"
+    },
+    "tester": {
+        "name": "tester",
+        "notifier": "none",
+        "pid": "sleep"
     }
 }

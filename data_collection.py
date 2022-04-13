@@ -3,42 +3,41 @@ import time, json, os
 from dhooks import Webhook
 from dotenv import load_dotenv
 
+BASE = os.path.dirname(os.path.abspath(__file__))
+PEOPLE = os.path.join(BASE, 'logs', 'people', 'personal_logs.json')
 
 class Brrr_alert:
-    def __init__(self, peoplepath) -> None:
+    def __init__(self) -> None:
         load_dotenv()
         disc_hook = os.getenv('WEBHOOK_TOKEN')
         self.captain_hook = Webhook(disc_hook)
-        self.ppath = peoplepath
+        self.ppath = PEOPLE
 
     def gobrrr(self, custom_msg:str='', pid:str='', power:int=18):
-        if not custom_msg:
-            person_info = {'name': 'Someone'}
-            if pid:
-                if os.path.exists(self.ppath):
-                    with open(self.ppath + "personal_logs.json", 'r') as fptl:
-                        people = json.load(fptl)
-                person_info = people[pid]
-            self.captain_hook.send(str(person_info['name'])+' went br'+'r'*power)
+        if custom_msg:
+            self.captain_hook.send(custom_msg)
             return
-        self.captain_hook.send(custom_msg)
+        person_info = {'name': 'Someone'}
+        if pid:
+            if os.path.exists(self.ppath):
+                with open(os.path.join(self.ppath), 'r') as fptl:
+                    people = json.load(fptl)
+            person_info = people[pid]
+        self.captain_hook.send(str(person_info['name'])+' went b'+'r'*power)
         return
 
 
 class TheCollector:
     def __init__(self):
         self.logs_root_path = './logs/tsvs/'
-        self.people_root_path = './logs/people/'
+        self.people_root_path = PEOPLE
         self.log_path = './logs/log.txt'
         self.personal_logs = self.get_personal_logs()
-        self.alerter = Brrr_alert(self.people_root_path)
-
 
     def death_and_taxes(self, data_dict):
         """
         get data -> store data/json/csv? -> keep track of each persons data 
         """
-        
         datapoint = pd.DataFrame([[time.time()] + [data_dict['class']] + data_dict['content']])
         
         person_data_df = self.get_tsv(data_dict['id'])
@@ -48,7 +47,6 @@ class TheCollector:
             person_data_df = pd.concat([person_data_df, datapoint])
         
         self.put_tsv(data_dict['id'], person_data_df)
-
         self.new_personal_logs(data_dict['id'])        
 
 
@@ -66,7 +64,7 @@ class TheCollector:
 
     def get_personal_logs(self):
         try:
-            with open(self.people_root_path + "personal_logs.json", "r") as f:
+            with open(self.people_root_path, "r") as f:
                 return json.load(f)
         except Exception as e:
             print(e, '\nNew dict created.')
@@ -74,7 +72,7 @@ class TheCollector:
 
 
     def put_personal_logs(self):
-        with open(self.people_root_path + "personal_logs.json", "w") as f:
+        with open(self.people_root_path, "w") as f:
             json.dump(self.personal_logs,f,indent=4,sort_keys=True)
 
 

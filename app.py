@@ -1,4 +1,3 @@
-from base64 import decode
 from flask import Flask, request, jsonify, redirect
 import sys, json, traceback
 import data_collection
@@ -19,7 +18,6 @@ print(f"""
 
 @app.route('/prediction', methods=['POST', 'GET'])
 def predict():
-    
     try:
         if request.method == "GET":
             return """
@@ -32,27 +30,23 @@ def predict():
             <hr>
             <p>ps. if you dont know how to make post requests, click <a href="https://www.w3schools.com/python/ref_requests_post.asp">here</a>.</p>
             """
-
         # get request json object
         post_data = request.get_json()
-        print(post_data)
-
+        print(post_data.keys())
         # extract vars from post json
         input_arr = post_data['content']
-
-        prediction = model_manager.predict_from_array(input_arr)
-         
+        prediction = model_manager.predict_from_array(input_arr) 
         # create json response object
         response_json = {
             'class1': json.dumps(prediction[0, 0].item()),
             'class2': json.dumps(prediction[0, 1].item())
             }
-
-        if not max(response_json) == 'class1':
+        print('--PREDICTION-STATS--\nHighest:', max(response_json, key=lambda k: float(response_json.get(k))), '\nRaw:', response_json)
+        if not max(response_json, key= lambda k: response_json.get(k)) == 'class1':
             brpower = int(sum([float(x) for x in response_json.values()]) * 100)
-            data_collector.alerter.gobrrr(pid=post_data['id'], power=brpower)
-        print(brpower, response_json, max(response_json))
-
+            print('Msg power =', brpower)
+            alerter.gobrrr(pid=post_data['id'], power=brpower)
+        
         # convert to response json object
         response = jsonify(response_json)
         response.status_code = 200
@@ -83,8 +77,8 @@ def health():
 @app.route("/ping", methods=["GET"])
 def pingpong():
     if request.method == "GET":
-        data_collector.alerter.gobrrr(custom_msg='Pong!')
-        return "Ping!"
+        alerter.gobrrr(custom_msg='Pong!')
+        return "Pong!"
 
 global_str = ''
 @app.route("/update", methods=["GET", "POST"])
@@ -233,5 +227,6 @@ def predict_testing():
 if __name__ == "__main__":
     # run flask application in debug mode
     #predict_testing()
+    alerter = data_collection.Brrr_alert()
     data_collector = data_collection.TheCollector()
     app.run(debug=True, host="0.0.0.0", port=5000)
