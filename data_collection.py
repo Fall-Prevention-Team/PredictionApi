@@ -5,10 +5,11 @@ from dotenv import load_dotenv
 
 
 class Brrr_alert:
-    def __init__(self) -> None:
+    def __init__(self, peoplepath) -> None:
         load_dotenv()
         disc_hook = os.getenv('WEBHOOK_TOKEN')
         self.captain_hook = Webhook(disc_hook)
+        self.ppath = peoplepath
 
     def gobrrr(self, custom_msg:str='', pid:str='', power:int=18):
         if not custom_msg:
@@ -30,7 +31,7 @@ class TheCollector:
         self.people_root_path = './logs/people/'
         self.log_path = './logs/log.txt'
         self.personal_logs = self.get_personal_logs()
-        self.alerter = Brrr_alert()
+        self.alerter = Brrr_alert(self.people_root_path)
 
 
     def death_and_taxes(self, data_dict):

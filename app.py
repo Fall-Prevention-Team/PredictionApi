@@ -17,7 +17,7 @@ print(f"""
 """)
 
 
-@app.route('/predict', methods=['POST', 'GET'])
+@app.route('/prediction', methods=['POST', 'GET'])
 def predict():
     
     try:
