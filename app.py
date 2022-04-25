@@ -177,7 +177,7 @@ def data_collection_interface():
 
             data_collector.death_and_taxes(in_dict)
 
-            response = f"Data collected from user; {user_id} with the class; {datapoint_class} and value; {float_input_arr}"
+            response = f"Data from user; {user_id}, class; {datapoint_class}, value len; {len(float_input_arr)}"
     except Exception as e:
         print(traceback.format_exc(), e)
         response = 'err:  '+str(e)
