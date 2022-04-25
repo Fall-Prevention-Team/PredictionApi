@@ -1,5 +1,5 @@
 import pandas as pd
-import os
+import os, sys
 from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 from sklearn.metrics import accuracy_score
@@ -7,6 +7,8 @@ from sklearn.feature_selection import SelectFromModel
 from sklearn.model_selection import train_test_split
 
 root = os.path.join(os.path.dirname(__file__), "logs", "tsvs")
+if len(sys.argv) > 1:
+    root = os.path.join(root, sys.argv[1])
 files = [os.path.join(root, f) for f in os.listdir(root) if f.endswith(".tsv")]
 
 path_to_drop_tsv = os.path.join(os.path.dirname(__file__),"logs", "split")
@@ -48,12 +50,12 @@ class Tsv_handler:
 
 
     if __name__ == "__main__":
-        fname = "aout"
+        fname = "aoutsub48"
         data_to_split = read_all_tsvs()
-        train_data = data_to_split.sample(frac=0.5)
+        train_data = data_to_split.sample(frac=0.7)
         test_data = data_to_split.drop(train_data.index)
         train_data.to_csv(os.path.join(path_to_drop_tsv, f"{fname}_TRAIN.tsv"),sep="\t", header=None, index=False)
-        test_data.to_csv(os.path.join(path_to_drop_tsv, f"{fname}TEST.tsv"),sep="\t", header=None, index=False)
+        test_data.to_csv(os.path.join(path_to_drop_tsv, f"{fname}_TEST.tsv"),sep="\t", header=None, index=False)
     
 
     

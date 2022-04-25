@@ -44,6 +44,126 @@
         "notifier": "none",
         "pid": "6a970cca-b3db-4878-a77b-a0682a18df40"
     },
+    "KB-Fall": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "KB-Fall"
+    },
+    "KB-Fall-t": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "KB-Fall-t"
+    },
+    "Myndighederne": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "Myndighederne"
+    },
+    "R1X1KB": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "R1X1KB"
+    },
+    "R1X1SL": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "R1X1SL"
+    },
+    "SLWalkandSit": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "SLWalkandSit"
+    },
+    "Sender id dnot set, Default id:": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "Sender id dnot set, Default id:"
+    },
+    "Simon": {
+        "name": "Simon",
+        "notifier": "none",
+        "pid": "Simon"
+    },
+    "Simon12": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "Simon12"
+    },
+    "SmoinNotFall": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "SmoinNotFall"
+    },
+    "X1KK": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "X1KK"
+    },
+    "X1SL": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "X1SL"
+    },
+    "X2KB": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "X2KB"
+    },
+    "X2KK": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "X2KK"
+    },
+    "X2SL": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "X2SL"
+    },
+    "X3KB": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "X3KB"
+    },
+    "X3KK": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "X3KK"
+    },
+    "X3SL": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "X3SL"
+    },
+    "X4KB": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "X4KB"
+    },
+    "X4KK": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "X4KK"
+    },
+    "X4SL": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "X4SL"
+    },
+    "X5KB": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "X5KB"
+    },
+    "X5KK": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "X5KK"
+    },
+    "X5SL": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "X5SL"
+    },
     "a65ca12d-53d5-4ce6-b2f2-0b817b513751": {
         "name": "Bueeno",
         "notifier": "none",
@@ -53,6 +173,16 @@
         "name": "No name connected",
         "notifier": "none",
         "pid": "ad98adec-a7d8-4b0e-bf5c-81473d09d8d3"
+    },
+    "benno": {
+        "name": "Benno",
+        "notifier": "none",
+        "pid": "benno"
+    },
+    "closed12": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "closed12"
     },
     "d37f4ac8-358d-4a4b-a3ba-44d0374b1edd": {
         "name": "No name connected",
@@ -64,10 +194,30 @@
         "notifier": "none",
         "pid": "f0bc970202270f40"
     },
+    "graesplaene12": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "graesplaene12"
+    },
+    "k\u00f8leskab": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "k\u00f8leskab"
+    },
+    "k\u00f8leskab12": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "k\u00f8leskab12"
+    },
     "sleep": {
         "name": "sleep data",
         "notifier": "none",
         "pid": "sleep"
+    },
+    "test12": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "test12"
     },
     "tester": {
         "name": "tester",

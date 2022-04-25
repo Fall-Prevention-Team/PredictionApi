@@ -42,7 +42,7 @@ def predict():
             'class2': json.dumps(prediction[0, 1].item())
             }
         print('--PREDICTION-STATS--\nHighest:', max(response_json, key=lambda k: float(response_json.get(k))), '\nRaw:', response_json)
-        if not max(response_json, key= lambda k: response_json.get(k)) == 'class1':
+        if not max(response_json, key= lambda k: float(response_json.get(k))) == 'class1':
             brpower = int(sum([float(x) for x in response_json.values()]) * 100)
             print('Msg power =', brpower)
             alerter.gobrrr(pid=post_data['id'], power=brpower)
