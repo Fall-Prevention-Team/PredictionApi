@@ -1,3 +1,4 @@
+from audioop import avg
 import pandas as pd
 import os, sys
 from sklearn.ensemble import RandomForestClassifier
@@ -31,19 +32,25 @@ class Tsv_handler:
         y = data.iloc[:, 0]
         print(X)
         print(y)
-        x_train, x_test, y_train, y_test = train_test_split(X,y, test_size=0.25)
-        feat_clf = SelectFromModel(RandomForestClassifier(n_estimators=100))
-        clf = RandomForestClassifier(n_estimators=100)
-        clf.fit(x_train, y_train)
-        feat_clf.fit(x_train, y_train)
-        features_selected = x_train.columns[(feat_clf.get_support())]
-        print(len(features_selected))
-        print(features_selected)
-        print(clf.estimators_[0])
-        prediction_of_y = clf.predict(x_test)
-        acc = accuracy_score(y_true=y_test, y_pred=prediction_of_y)
-        print(acc)
-        return acc
+        
+        avg_acc = 0
+        for x in range(10):
+            x_train, x_test, y_train, y_test = train_test_split(X,y, test_size=0.25)
+            feat_clf = SelectFromModel(RandomForestClassifier(n_estimators=100))
+            clf = RandomForestClassifier(n_estimators=100)
+            clf.fit(x_train, y_train)
+            feat_clf.fit(x_train, y_train)
+            #features_selected = x_train.columns[(feat_clf.get_support())]
+            #print(len(features_selected))
+            #print(features_selected)
+            #print(clf.estimators_[0])
+            prediction_of_y = clf.predict(x_test)
+            avg_acc += accuracy_score(y_true=y_test, y_pred=prediction_of_y)
+            print(x)
+
+            print(avg_acc)
+        print(avg_acc/10)
+        return avg_acc/10
 
 
 
