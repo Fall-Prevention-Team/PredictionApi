@@ -1,4 +1,4 @@
-import os
+import os, sys
 import pandas as pd
 import numpy as np
 root = os.path.join(os.path.dirname(__file__), "logs", "tsvs")
@@ -13,12 +13,16 @@ def read_all_tsvs():
     return df
 
 mdf = read_all_tsvs()
-for i, col in enumerate(mdf):
-    if not i % 5 == 0: 
-        mdf.pop(col)
-msk = np.random.rand(len(mdf)) < 0.8
-train = mdf[msk]
-test = mdf[~msk]
-fname = f'all-{str(mdf.shape).replace(", ", "-")}'
-train.to_csv(f"{root}/../split/{fname}_TRAIN.tsv",sep="\t", header=None, index=False)
-train.to_csv(f"{root}/../split/{fname}_TEST.tsv",sep="\t", header=None, index=False)
+if '-s' in sys.argv:
+    fname = f'single_l-{len(mdf)}'
+    mdf.to_csv(f"{root}/../split/{fname}.tsv",sep="\t", header=None, index=False)
+else:
+    for i, col in enumerate(mdf):
+        if not i % 5 == 0: 
+            mdf.pop(col)
+    msk = np.random.rand(len(mdf)) < 0.8
+    train = mdf[msk]
+    test = mdf[~msk]
+    fname = f'all-{str(mdf.shape).replace(", ", "-")}'
+    train.to_csv(f"{root}/../split/{fname}_TRAIN.tsv",sep="\t", header=None, index=False)
+    train.to_csv(f"{root}/../split/{fname}_TEST.tsv",sep="\t", header=None, index=False)
