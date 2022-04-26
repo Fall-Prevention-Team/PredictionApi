@@ -44,6 +44,11 @@
         "notifier": "none",
         "pid": "6a970cca-b3db-4878-a77b-a0682a18df40"
     },
+    "Benno-nf": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "Benno-nf"
+    },
     "KB-Fall": {
         "name": "No name connected",
         "notifier": "none",
@@ -53,6 +58,61 @@
         "name": "No name connected",
         "notifier": "none",
         "pid": "KB-Fall-t"
+    },
+    "KB-NF-RAMDOM": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "KB-NF-RAMDOM"
+    },
+    "KB-NF-RANDOM": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "KB-NF-RANDOM"
+    },
+    "KBX1": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "KBX1"
+    },
+    "KBX2": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "KBX2"
+    },
+    "KBX3": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "KBX3"
+    },
+    "KBX4": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "KBX4"
+    },
+    "KKX1": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "KKX1"
+    },
+    "KKX2": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "KKX2"
+    },
+    "KKX3": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "KKX3"
+    },
+    "KKX4": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "KKX4"
+    },
+    "KK_notfall": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "KK_notfall"
     },
     "Myndighederne": {
         "name": "No name connected",
@@ -73,6 +133,26 @@
         "name": "No name connected",
         "notifier": "none",
         "pid": "SLWalkandSit"
+    },
+    "SLX1": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "SLX1"
+    },
+    "SLX2": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "SLX2"
+    },
+    "SLX3": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "SLX3"
+    },
+    "SLX4": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "SLX4"
     },
     "Sender id dnot set, Default id:": {
         "name": "No name connected",
