@@ -104,6 +104,16 @@
         "notifier": "none",
         "pid": "KBX7"
     },
+    "KBX8": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "KBX8"
+    },
+    "KBX9": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "KBX9"
+    },
     "KKX1": {
         "name": "No name connected",
         "notifier": "none",
@@ -133,6 +143,21 @@
         "name": "No name connected",
         "notifier": "none",
         "pid": "KKX7"
+    },
+    "KKX8": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "KKX8"
+    },
+    "KKX8_1": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "KKX8_1"
+    },
+    "KKX9": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "KKX9"
     },
     "KK_NotFall": {
         "name": "No name connected",
@@ -198,6 +223,16 @@
         "name": "No name connected",
         "notifier": "none",
         "pid": "SLX7"
+    },
+    "SLX8": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "SLX8"
+    },
+    "SLX9": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "SLX9"
     },
     "Sender id dnot set, Default id:": {
         "name": "No name connected",
