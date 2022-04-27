@@ -1,3 +1,4 @@
+Data from user; SLX6, class; 2, value len; 48
 Data from user; KBX9, class; 2, value len; 48
 Data from user; SLX9, class; 2, value len; 48
 Data from user; SLX9, class; 2, value len; 48
@@ -97,4 +98,3 @@ Data from user; KKX6, class; 2, value len; 48
 Data from user; SLX6, class; 2, value len; 48
 Data from user; KBX6, class; 2, value len; 48
 Data from user; SLX6, class; 2, value len; 48
-Data from user; KKX6, class; 2, value len; 48
