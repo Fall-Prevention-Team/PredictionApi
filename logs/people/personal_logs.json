@@ -349,6 +349,11 @@
         "notifier": "none",
         "pid": "d37f4ac8-358d-4a4b-a3ba-44d0374b1edd"
     },
+    "dance_slow": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "dance_slow"
+    },
     "f0bc970202270f40": {
         "name": "dumdum",
         "notifier": "none",
@@ -368,6 +373,11 @@
         "name": "No name connected",
         "notifier": "none",
         "pid": "k\u00f8leskab12"
+    },
+    "shakes_misc": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "shakes_misc"
     },
     "sleep": {
         "name": "sleep data",
