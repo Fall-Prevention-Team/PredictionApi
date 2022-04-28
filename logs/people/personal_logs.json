@@ -114,6 +114,11 @@
         "notifier": "none",
         "pid": "KBX9"
     },
+    "KB_shake_misc": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "KB_shake_misc"
+    },
     "KKX1": {
         "name": "No name connected",
         "notifier": "none",
