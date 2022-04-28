@@ -22,7 +22,7 @@ class Brrr_alert:
             if os.path.exists(self.ppath):
                 with open(os.path.join(self.ppath), 'r') as fptl:
                     people = json.load(fptl)
-            person_info = people[pid]
+            person_info = people[pid] if pid in people else person_info
         self.captain_hook.send(str(person_info['name'])+' went b'+'r'*power)
         return
 

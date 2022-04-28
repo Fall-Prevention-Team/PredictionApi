@@ -32,23 +32,6 @@ def _array_to_prediction_obj(float_arr):
 
 
 
-def retrieve_new_model(model_download_link=MODEL_URL):
-    try:
-        res = requests.get(model_download_link)
-        print('status code:', res.status_code)
-        
-        if res.status_code != 200:
-            return f'Error getting model: res_code({res.status_code})'
-        
-        with open(MODEL_PATH, 'wb') as fr:
-            fr.write(res.content)
-        
-        with open(LOG_PATH_TIME_LAST_RENEW, 'w') as tlog:
-            tlog.write(str(time.time()))
-
-        return 'Model updated successfully'
-    except Exception as e:
-        return f'Something went wrong: {e}'
 
 
 def get_last_model_renew_time():
@@ -63,8 +46,31 @@ def get_last_model_renew_time():
     except Exception as e:
         return f'Something went wrong!', e
 
+
 # stores model in global to keep it loaded.
 model = None
+def retrieve_new_model(model_download_link=MODEL_URL):
+    global model
+    try:
+        res = requests.get(model_download_link)
+        print('status code:', res.status_code)
+        
+        if res.status_code != 200:
+            return f'Error getting model: res_code({res.status_code})'
+        
+        with open(MODEL_PATH, 'wb') as fr:
+            fr.write(res.content)
+        
+        with open(LOG_PATH_TIME_LAST_RENEW, 'w') as tlog:
+            tlog.write(str(time.time()))
+        
+        model = res.content
+
+        return 'Model updated successfully'
+    except Exception as e:
+        return f'Something went wrong: {e}'
+
+
 def tf_init(use='cpu'):
     global model
     if use == 'gpu':
