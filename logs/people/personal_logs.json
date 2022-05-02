@@ -49,6 +49,11 @@
         "notifier": "none",
         "pid": "Benno-nf"
     },
+    "Benno_sitsdownsups": {
+        "name": "No name connected",
+        "notifier": "none",
+        "pid": "Benno_sitsdownsups"
+    },
     "KB-Fall": {
         "name": "No name connected",
         "notifier": "none",
