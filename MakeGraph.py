@@ -1,10 +1,11 @@
 from asyncore import read
+from cProfile import label
 import os
 import matplotlib.pyplot as plt
 import pandas as pd
 
 root = os.path.join(os.path.dirname(__file__), "logs", "tsvs")
-files = [os.path.join(root, f) for f in os.listdir(root) if f.__contains__("KBX1")]
+files = [os.path.join(root, f) for f in os.listdir(root) if f.__contains__("SLX1")]
 
 def read_all_tsvs():
     list_of_df =[pd.read_csv(o, sep="\t", header=None) for o in files]
@@ -25,9 +26,13 @@ def GraphFromTSV():
             x = x_values.loc[index]
             y = y_values.loc[index]
             z = z_values.loc[index]
-            plt.plot(x)
-            plt.plot(y)
-            plt.plot(z)
+            plt.plot(x, label="X label")
+            plt.plot(y, label="Y label")
+            plt.plot(z, label="Z label")
+            plt.title("Fall number: " + str(index+1))
+            plt.xlabel("number of datapoint")
+            plt.ylabel("value detoned")
+            plt.legend()
             plt.show()
 
             
