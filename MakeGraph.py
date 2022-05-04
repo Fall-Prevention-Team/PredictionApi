@@ -23,7 +23,7 @@ def GraphFromTSV():
         Ro = Robust()
         scale_dataframe = sc.fit_transform(data_frame)
         Robust_dataframe = Ro.fit_transform(data_frame)
-        #plt.subplot(3,1,1)
+        
         x_values = data_frame.iloc[:, 1::3]
         y_values = data_frame.iloc[:, 2::3]
         z_values = data_frame.iloc[:, 3::3]
