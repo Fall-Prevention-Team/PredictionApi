@@ -65,6 +65,14 @@ def GraphFromTSV():
             plt.show()
 
         
+def RobustScalar():
+    data_frame = read_all_tsvs()
+    data_only_label = data_frame.loc[:,1]
+    Robust_array = Robust().fit_transform(data_frame.iloc[:,1:])
+    arr_to_df = pd.DataFrame(Robust_array)
+    concat_df = pd.concat([data_only_label, arr_to_df], axis=1)
+    return concat_df
 
 
-GraphFromTSV()
+RobustScalar()
+#GraphFromTSV()
