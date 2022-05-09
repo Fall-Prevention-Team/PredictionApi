@@ -80,8 +80,8 @@ def saveFile(data):
     from sklearn.model_selection import train_test_split
 
     train, test = train_test_split(data, test_size=0.25)
-    name_of_test_file = "TEST_ROBUST"
-    name_of_train_file ="TRAIN_ROBUST"
+    name_of_test_file = "ROBUST_TEST"
+    name_of_train_file ="ROBUST_TRAIN"
 
     completeNameTest = os.path.join(root, name_of_test_file+".tsv")
     completeNameTrain = os.path.join(root, name_of_train_file+".tsv")
