@@ -10,7 +10,7 @@ import pandas as pd
 import os.path
 
 root = os.path.join(os.path.dirname(__file__), "logs", "tsvs")
-files = [os.path.join(root, f) for f in os.listdir(root) if f.__contains__("KBX1")]
+files = [os.path.join(root, f) for f in os.listdir(root) if f.endswith(".tsv")]
 
 def read_all_tsvs():
     list_of_df =[pd.read_csv(o, sep="\t", header=None) for o in files]
@@ -77,9 +77,17 @@ def RobustScalar():
     saveFile(concat_df)
 
 def saveFile(data):
-    name_of_file = "ROBUST"
-    completeName = os.path.join(root, name_of_file+".tsv")
-    data.to_csv(completeName, sep="\t", header=None, index=False)
+    from sklearn.model_selection import train_test_split
+
+    train, test = train_test_split(data, test_size=0.25)
+    name_of_test_file = "TEST_ROBUST"
+    name_of_train_file ="TRAIN_ROBUST"
+
+    completeNameTest = os.path.join(root, name_of_test_file+".tsv")
+    completeNameTrain = os.path.join(root, name_of_train_file+".tsv")
+    test.to_csv(completeNameTest, sep="\t", header=None, index=False)
+    train.to_csv(completeNameTrain, sep="\t", header=None, index=False)
+    print(len(data))
     
 RobustScalar()
 #GraphFromTSV()
