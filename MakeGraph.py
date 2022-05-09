@@ -1,10 +1,13 @@
 from asyncore import read
 from cProfile import label
+from email.header import Header
+from operator import index
 import os
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler as scale
 from sklearn.preprocessing import RobustScaler as Robust
 import pandas as pd
+import os.path
 
 root = os.path.join(os.path.dirname(__file__), "logs", "tsvs")
 files = [os.path.join(root, f) for f in os.listdir(root) if f.__contains__("KBX1")]
@@ -71,8 +74,12 @@ def RobustScalar():
     Robust_array = Robust().fit_transform(data_frame.iloc[:,1:])
     arr_to_df = pd.DataFrame(Robust_array)
     concat_df = pd.concat([data_only_label, arr_to_df], axis=1)
-    return concat_df
+    saveFile(concat_df)
 
-
+def saveFile(data):
+    name_of_file = "ROBUST"
+    completeName = os.path.join(root, name_of_file+".tsv")
+    data.to_csv(completeName, sep="\t", header=None, index=False)
+    
 RobustScalar()
 #GraphFromTSV()
