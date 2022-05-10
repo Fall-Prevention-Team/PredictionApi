@@ -68,10 +68,10 @@ def GraphFromTSV():
             plt.show()
 
         
-def RobustScalar():
+def RobustScalar(func):
     data_frame = read_all_tsvs()
     data_only_label = data_frame.loc[:,1]
-    Robust_array = Robust().fit_transform(data_frame.iloc[:,1:])
+    Robust_array = func().fit_transform(data_frame.iloc[:,1:])
     arr_to_df = pd.DataFrame(Robust_array)
     concat_df = pd.concat([data_only_label, arr_to_df], axis=1)
     saveFile(concat_df)
@@ -80,14 +80,15 @@ def saveFile(data):
     from sklearn.model_selection import train_test_split
 
     train, test = train_test_split(data, test_size=0.25)
-    name_of_test_file = "ROBUST_TEST"
-    name_of_train_file ="ROBUST_TRAIN"
+    name_of_test_file = "STANDARD_TEST"
+    name_of_train_file ="STANDARD_TRAIN"
 
-    completeNameTest = os.path.join(root, name_of_test_file+".tsv")
-    completeNameTrain = os.path.join(root, name_of_train_file+".tsv")
+    completeNameTest = os.path.join(root, '..', 'split', name_of_test_file+".tsv")
+    completeNameTrain = os.path.join(root, '..', 'split', name_of_train_file+".tsv")
     test.to_csv(completeNameTest, sep="\t", header=None, index=False)
     train.to_csv(completeNameTrain, sep="\t", header=None, index=False)
     print(len(data))
-    
-RobustScalar()
+
+# Robust | scale
+RobustScalar(scale)
 #GraphFromTSV()
