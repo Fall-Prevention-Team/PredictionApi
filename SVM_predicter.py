@@ -3,7 +3,8 @@ from sklearn.preprocessing import StandardScaler
 import os, sys
 import pandas as pd
 from sklearn.svm import SVC
-
+from sklearn.metrics import recall_score
+from sklearn.metrics import precision_score
 root = os.path.join(os.path.dirname(__file__), "logs", "tsvs")
 if len(sys.argv) > 1:
     root = os.path.join(root, sys.argv[1])
@@ -25,7 +26,13 @@ def SVM_FOR_DAYS():
     print(y)
     clf = make_pipeline(StandardScaler(), SVC(gamma='auto'))
     clf.fit(X, y)
-    acc = clf.score(X, y)
+    y_predict = clf.predict(X)
+    acc = clf.score(X, y) #return mean accuracy
     print(acc)
+    recall = recall_score(y, y_predict) # gives recall from y_true and y_prediction
+    print(recall)
+    precision = precision_score(y, y_predict) # gives precision of y_true and y_prediction
+    print(precision)
+
 
 SVM_FOR_DAYS()
